@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import { Header } from 'react-native-elements';
 import logo from './assets/favicon.png';
@@ -7,11 +7,35 @@ import { Ionicons } from '@expo/vector-icons';
 //const backArrow = <Ionicons name="md-arrow-back" size={30} color="#fff"/>;
 
 export default function App() {
+  const [textInputLink, setTextInputLink] = useState('');
+  const [textInputName, setTextInputName] = useState('');
+  const [textInputArtist, setTextInputArtist] = useState('');
+
+  const checkTextInput = () => {
+    
+    if (!textInputLink.trim()) {
+      Alert.alert('All fields must be filled out','Please Enter a Link');
+      return;
+    }
+    
+    if (!textInputName.trim()) {
+      Alert.alert('All fields must be filled out', 'Please Enter a Song Name');
+      return;
+    }
+    if (!textInputArtist.trim()) {
+      Alert.alert('All fields must be filled out', 'Please Enter an Artist');
+      return;
+    }
+    //Checked Successfully
+    
+    Alert.alert('Success', 'Song Submitted');
+  };
+
   return (
     <View style={styles.container}>
       <Header
         leftComponent={<Ionicons name="md-arrow-back" size={30} color="#fff"/>}
-        centerComponent={{ text: 'Game Name', style: { color: '#fff', fontSize: 30 } }}
+        centerComponent={{ text: 'Pritish\'s Test Game', style: { color: '#fff', fontSize: 30 } }}
         rightComponent={{ icon: 'home', color: '#fff' }}
       />
 
@@ -27,6 +51,9 @@ export default function App() {
       <StatusBar style="auto" />
 
       <TextInput
+        onChangeText={
+          (value) => setTextInputLink(value)
+        }
         style={{
         height: 40,
         width: 250,
@@ -42,6 +69,9 @@ export default function App() {
       />
 
       <TextInput
+        onChangeText={
+          (value) => setTextInputName(value)
+        }
         style={{
         height: 40,
         width: 250,
@@ -57,22 +87,25 @@ export default function App() {
       />
 
       <TextInput
+        onChangeText={
+          (value) => setTextInputArtist(value)
+        }
         style={{
-        height: 40,
-        width: 250,
-        color: "#000",
-        borderColor: '#000',
-        borderWidth: 2,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 10,
-        marginBottom: 20,
+          height: 40,
+          width: 250,
+          color: "#000",
+          borderColor: '#000',
+          borderWidth: 2,
+          paddingTop: 10,
+          paddingBottom: 10,
+          paddingLeft: 10,
+          marginBottom: 20,
       }}
-      placeholder=" Artist Name"
+        placeholder=" Artist Name"
       />
     
       <Button
-        onPress={() => Alert.alert("Submitted Song")}
+        onPress={() => checkTextInput()}
         title= "Submit"
         color = "#000000"
         />
@@ -85,7 +118,7 @@ export default function App() {
           fontSize: 20
         }}>Search on YouTube
       </Text>
-
+      
       <Text style =
         {{
           color: '#000',
